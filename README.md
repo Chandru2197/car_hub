@@ -35,10 +35,7 @@ The APK is signed with the build machine's debug key. An APK from a different ma
 1. Install the APK on the phone (allow "install unknown apps" for your browser/Files app).
 2. Android Auto hides apps not installed from the Play Store. Two ways around it:
    - Enable Android Auto developer mode (Settings → Apps → Android Auto → tap *Version* 10 times), then ⋮ → *Developer settings* → tick **Unknown sources**.
-   - If CarHub still doesn't appear, reinstall from a computer so Android records the Play Store as the installer:
-     ```
-     adb install -r -i com.android.vending app-release.apk
-     ```
+   - If CarHub still doesn't appear, copy `tools/AA-Check.cmd` into Android's `platform-tools` folder on a Windows PC, connect the phone with USB debugging on, and double-click it. It saves `aa-report.txt` with Android Auto's reason for hiding the app. (Note: `adb install -i com.android.vending` does not help on current Android Auto; it can tell the install came from a computer.)
 3. Open CarHub once, add a stream, then check Android Auto → **Customize launcher**.
 
 ## Privacy
