@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#FF101418</color>
+    <color name="tile">#FF1E252C</color>
+    <color name="accent">#FF3D8BFD</color>
+    <color name="text">#FFF2F4F7</color>
+    <color name="muted">#FF9AA4AF</color>
+
+    <style name="Theme.CarHub" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+    </style>
+
+    <style name="Theme.CarHub.Fullscreen">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+</resources>
