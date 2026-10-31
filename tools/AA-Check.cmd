@@ -28,14 +28,21 @@ if errorlevel 1 (
   exit /b 1
 )
 
+rem Turn on Android Auto's detailed logging (temporary: resets when the phone restarts).
+adb shell setprop log.tag.CAR.VALIDATOR VERBOSE
+adb shell setprop log.tag.CAR.AUTH VERBOSE
+adb shell setprop log.tag.CAR.SERVICE VERBOSE
+rem Restart Android Auto so it re-checks every app.
+adb shell am force-stop com.google.android.projection.gearhead
 adb logcat -c
 
 echo.
 echo ================================================================
-echo  Now on the PHONE:
-echo   1. Settings ^> Apps ^> Android Auto ^> Force stop
-echo   2. Open Android Auto settings ^> Customize launcher
-echo   3. Wait 10 seconds
+echo  Android Auto was restarted. Now on the PHONE:
+echo   1. Open Android Auto settings ^> Customize launcher, wait 10 seconds
+echo   2. If you can: keep the USB cable to the laptop, and connect
+echo      the phone to the car WIRELESSLY (Bluetooth/Wi-Fi Android Auto).
+echo      Wait until the car shows Android Auto, then wait 20 seconds.
 echo ================================================================
 echo.
 echo Press any key here when you have done that...
@@ -59,7 +66,8 @@ adb shell dumpsys package com.personal.carhub | findstr /i "versionName installe
 adb shell cmd package query-services -a android.media.browse.MediaBrowserService | findstr /i "packageName=" >> "%REPORT%"
 >> "%REPORT%" echo.
 >> "%REPORT%" echo === Android Auto decisions ===
-adb logcat -d | findstr /i "VALIDATOR CAR.AUTH carhub isPackageAllowed DENIED" >> "%REPORT%"
+adb logcat -d > "%~dp0aa-full-log.txt"
+findstr /i "VALIDATOR CAR.AUTH CAR.SERVICE carhub isPackageAllowed DENIED ALLOWED Finsky unknown.source" "%~dp0aa-full-log.txt" | findstr /v /i "avc: dataInfoSend adbd artd START_DEBUG ActivityManager UsageStats WindowManager" >> "%REPORT%"
 
 echo.
 echo Done. The report is saved as aa-report.txt and will open now.
